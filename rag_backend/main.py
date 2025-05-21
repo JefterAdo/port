@@ -1,38 +1,118 @@
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
-from datetime import date
+from datetime import timedelta
 
-from rag_engine import RAGEngine
-from forces_api import router as forces_router
-from rhdpchat_api import router as rhdpchat_router
-from forces_store import get_all_parties, get_party_strengths_weaknesses
-from forces_models import PoliticalParty, StrengthWeakness
+from .rag_engine import RAGEngine
+from .forces_api import router as forces_router
+from .rhdpchat_api import router as rhdpchat_router
+from .forces_store import list_parties, list_strengths_weaknesses
+from .forces_models import PoliticalParty, StrengthWeakness
+from .security import User, create_access_token, get_current_active_user, verify_password, get_user, oauth2_scheme, fake_users_db, status # Ajout des imports de sécurité
+from .config import settings # Importation des settings centralisés
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI(title="RAG API", description="API pour le moteur de recherche RAG")
 
-# Configuration CORS
-origins = [
-    "http://localhost",          # Pour les développements locaux sans port spécifié
-    "http://localhost:3000",     # Si votre frontend React tourne sur le port 3000 (Create React App par défaut)
-    "http://localhost:5173",     # Si votre frontend React tourne sur le port 5173 (Vite par défaut)
-    "https://demoiassistant.online",
-    "https://www.demoiassistant.online",
-    # Ajoutez d'autres origines si nécessaire
-]
+# Gestionnaires d'exceptions personnalisés
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    # Ici, vous pourriez ajouter du logging
+    # import logging
+    # logging.error(f"HTTPException: {exc.status_code} {exc.detail} for {request.url}")
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail},
+        headers=exc.headers,
+    )
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception):
+    # Loggez l'exception ici pour le débogage
+    # import logging
+    # logging.exception(f"Unhandled exception for {request.url}: {exc}")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "An unexpected error occurred on the server."},
+    )
+
+# Configuration CORS via settings
+# La logique de chargement et de parsing des origines est dans config.py
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.CORS_ALLOWED_ORIGINS, # Utilisation des settings
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Limiter aux méthodes nécessaires
-    allow_headers=["Content-Type", "Authorization"],  # Limiter aux headers nécessaires
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
+# Determine the path to the 'port' directory (parent of 'rag_backend')
+# This directory contains index.html and potentially other static assets
+# Define the path to the 'dist' directory created by 'npm run build'
+# This is relative to the 'port' directory, which is the parent of 'rag_backend'
+current_script_path = os.path.dirname(os.path.abspath(__file__))
+project_root_directory = os.path.join(current_script_path, "..") # This is 'port/'
+dist_directory = os.path.join(project_root_directory, "dist")
+
+# Route to serve index.html from the 'dist' directory
+@app.get("/", include_in_schema=False)
+async def serve_index_html():
+    index_path = os.path.join(dist_directory, "index.html")
+    if not os.path.exists(index_path):
+        raise HTTPException(status_code=404, detail="dist/index.html not found")
+    return FileResponse(index_path)
 
 app.include_router(forces_router)
 app.include_router(rhdpchat_router)
 rag = RAGEngine()
+
+# Mount the 'dist/assets' directory to serve CSS, JS, etc.
+assets_path = os.path.join(dist_directory, "assets")
+if os.path.exists(assets_path):
+    app.mount("/assets", StaticFiles(directory=assets_path), name="static_assets")
+
+# Fallback: Mount the entire 'dist' directory to serve other static files
+# (e.g., favicon.ico, logo.svg if they are copied to dist/ by the build process)
+# This should come AFTER specific mounts like '/assets' and AFTER the root route for index.html.
+# The `StaticFiles` instance for "/" needs to be mounted last if you have other specific routes.
+# To avoid conflicts with API routes, it's often better to serve static files from a subpath like /static
+# or ensure API routes are defined before this broad static mount.
+# However, for a single-page application (SPA) where index.html handles routing, this is common.
+if os.path.exists(dist_directory):
+    app.mount("/", StaticFiles(directory=dist_directory), name="static_dist_root")
+
+# Modèle pour la réponse du token
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+# Endpoint pour l'authentification et l'obtention du token
+@app.post("/token", response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = get_user(fake_users_db, form_data.username) # Utilise fake_users_db de security.py
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES) # Correction: utiliser settings ici aussi pour la cohérence
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+# Endpoint de test sécurisé
+@app.get("/users/me/", response_model=User)
+async def read_users_me(current_user: User = Depends(get_current_active_user)):
+    return current_user
+
 
 # Fonction pour exécuter le script d'indexation
 def run_indexer(args: str):

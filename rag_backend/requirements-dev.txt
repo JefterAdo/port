@@ -1,0 +1,6 @@
+# Dépendances pour le développement et les tests
+safety==3.2.3 # Version récente et stable
+bandit==1.7.9 # Version récente et stable
+pytest==8.3.2 # Framework de test populaire
+httpx==0.27.0 # Requis par TestClient de FastAPI
+pytest-dotenv==0.5.2 # Pour charger .env pendant les tests

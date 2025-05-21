@@ -10,8 +10,8 @@ load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 GROQ_API_KEY_RHDPCHAT = os.getenv("GROQ_API_KEY_RHDPCHAT")
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-from forces_api import router as forces_router
-from perplexity_proxy import router as perplexity_router
+from .forces_api import router as forces_router
+from .perplexity_proxy import router as perplexity_router
 
 app = FastAPI()
 router = APIRouter()

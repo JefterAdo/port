@@ -3,8 +3,8 @@ from typing import List
 from datetime import date
 import os
 import uuid
-from forces_models import PoliticalParty, StrengthWeakness, MediaFile, TypeElement, MediaType, BaseModel
-from forces_store import (
+from .forces_models import PoliticalParty, StrengthWeakness, MediaFile, TypeElement, MediaType, BaseModel
+from .forces_store import (
     create_party, get_party, list_parties, update_party, delete_party,
     add_strength_weakness, list_strengths_weaknesses, delete_strength_weakness,
     list_all_strengths_weaknesses, add_media_to_strength_weakness, get_media_files_for_element,

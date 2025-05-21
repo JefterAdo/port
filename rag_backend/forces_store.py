@@ -6,9 +6,9 @@ from datetime import date
 from typing import Dict, List, Optional, Union
 from pathlib import Path
 
-from forces_models import PoliticalParty, StrengthWeakness, MediaFile, TypeElement, MediaType
-
 # Utilisation de chemins absolus pour éviter les attaques par traversement de répertoire
+from .forces_models import PoliticalParty, StrengthWeakness, MediaFile, TypeElement, MediaType
+
 BASE_DIR = Path(__file__).parent.absolute()
 DB_PARTIES_FILE = os.path.join(BASE_DIR, "parties.json")
 DB_SW_FILE = os.path.join(BASE_DIR, "strengths_weaknesses.json")

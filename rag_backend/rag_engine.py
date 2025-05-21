@@ -1,14 +1,31 @@
 from sentence_transformers import SentenceTransformer
 import chromadb
-from chromadb.config import Settings
+from chromadb.config import Settings as ChromaClientSettings # Renommé pour éviter conflit avec nos Settings
 from datetime import datetime
 import json
 from typing import Dict, List, Optional, Union, Any
 
+from .config import settings # Importation des settings centralisés
+
 class RAGEngine:
     def __init__(self, collection_name="docs"):
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
-        self.client = chromadb.Client(Settings(anonymized_telemetry=False))
+        
+        # Configuration du client ChromaDB via l'objet settings
+        client_settings_chroma = ChromaClientSettings(anonymized_telemetry=False)
+        if settings.CHROMA_SSL_ENABLED:
+            client_settings_chroma.chroma_server_ssl_verify = settings.CHROMA_SSL_VERIFY
+            # Note: Le port par défaut pour HTTPS est souvent différent (ex: 443), 
+            # assurez-vous que CHROMA_PORT est correct pour votre configuration SSL.
+
+        # Utilisation de HttpClient pour se préparer à un serveur ChromaDB distant
+        self.client = chromadb.HttpClient(
+            host=settings.CHROMA_HOST,
+            port=settings.CHROMA_PORT,
+            ssl=settings.CHROMA_SSL_ENABLED,
+            settings=client_settings_chroma
+        )
+        
         self.collection = self.client.get_or_create_collection(
             name=collection_name,
             metadata={"hnsw:space": "cosine"}
