@@ -1,0 +1,18 @@
+[Unit]
+Description=RHDP Analysis AI Chat Service
+After=network.target
+
+[Service]
+User=demoiassistant
+Group=demoiassistant
+WorkingDirectory=/home/demoiassistant/htdocs/www.demoiassistant.online/port/server
+ExecStart=/usr/bin/node /home/demoiassistant/htdocs/www.demoiassistant.online/port/server/analysis-ai-chat.js
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=rhdp-analysis-chat
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

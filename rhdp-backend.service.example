@@ -1,0 +1,17 @@
+[Unit]
+Description=RHDP AI Communication Platform Backend
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/votre-domaine.com/rag_backend
+Environment="PATH=/var/www/votre-domaine.com/venv/bin"
+EnvironmentFile=/var/www/votre-domaine.com/.env
+ExecStart=/var/www/votre-domaine.com/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=5
+StartLimitInterval=0
+
+[Install]
+WantedBy=multi-user.target

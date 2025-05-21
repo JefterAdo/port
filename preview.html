@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aperçu de la Barre de Navigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .primary {
+            color: #FF6B00;
+        }
+        .bg-primary {
+            background-color: #FF6B00;
+        }
+        .border-primary {
+            border-color: #FF6B00;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-neutral-50">
+    <div class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 justify-between">
+                <div class="flex">
+                    <div class="flex flex-shrink-0 items-center">
+                        <a href="#" class="flex items-center">
+                            <div class="bg-primary rounded-full p-1.5 mr-2">
+                                <i data-lucide="briefcase" class="h-5 w-5 text-white"></i>
+                            </div>
+                            <span class="text-lg font-semibold text-neutral-900">RHDP</span>
+                        </a>
+                    </div>
+                    
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <!-- Tableau de bord -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer border-b-2 border-primary text-neutral-900">
+                                <i data-lucide="layout-dashboard" class="mr-1 h-4 w-4"></i>
+                                Tableau de bord
+                            </div>
+                        </div>
+                        
+                        <!-- Analyse de Contenu -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="search" class="mr-1 h-4 w-4"></i>
+                                Analyse de Contenu
+                            </div>
+                        </div>
+                        
+                        <!-- EDLS avec sous-menu horizontal -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="search" class="mr-1 h-4 w-4"></i>
+                                EDLS
+                                <i data-lucide="chevron-down" class="ml-1 h-3 w-3"></i>
+                            </div>
+                            
+                            <!-- Sous-menu horizontal -->
+                            <div class="absolute z-10 mt-1 bg-white shadow-lg rounded-md py-1 flex space-x-4 p-2 left-0 min-w-max hidden group-hover:flex">
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    EDLS OFFICIELS
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    EDLS PERSONNALISÉS
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    EDLS DE PROPAGANDE
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    EDLS V.O
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    EDLS DE PROXIMITÉ
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    PROJETS D'EDLS
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Forces & Faiblesses -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="search" class="mr-1 h-4 w-4"></i>
+                                Forces & Faiblesses
+                            </div>
+                        </div>
+                        
+                        <!-- REMONTÉES D'INFORMATIONS -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="search" class="mr-1 h-4 w-4"></i>
+                                REMONTÉES D'INFORMATIONS
+                            </div>
+                        </div>
+                        
+                        <!-- LANCER RECHERCHE avec sous-menu vertical -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="search" class="mr-1 h-4 w-4"></i>
+                                LANCER RECHERCHE
+                                <i data-lucide="chevron-right" class="ml-1 h-3 w-3"></i>
+                            </div>
+                            
+                            <!-- Sous-menu vertical -->
+                            <div class="absolute z-10 mt-1 bg-white shadow-lg rounded-md py-1 flex flex-col space-y-1 right-0 min-w-[200px] hidden group-hover:flex">
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    Retrouver une information sur le site
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    Recherches avancées
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 whitespace-nowrap">
+                                    RHDP Chat
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Historique -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="history" class="mr-1 h-4 w-4"></i>
+                                Historique
+                            </div>
+                        </div>
+                        
+                        <!-- Utilisateurs (admin) -->
+                        <div class="relative group">
+                            <div class="inline-flex items-center px-1 pt-1 text-sm font-medium cursor-pointer text-neutral-500 hover:border-b-2 hover:border-neutral-300 hover:text-neutral-700">
+                                <i data-lucide="users" class="mr-1 h-4 w-4"></i>
+                                Utilisateurs
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <div class="relative ml-3">
+                        <div>
+                            <button type="button" class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white">
+                                        JD
+                                    </div>
+                                    <span class="ml-2 text-sm font-medium text-neutral-700">John Doe</span>
+                                    <i data-lucide="chevron-down" class="ml-1 h-4 w-4 text-neutral-500"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-2xl font-bold text-neutral-900">Aperçu de la Nouvelle Barre de Navigation</h1>
+        <p class="mt-4 text-neutral-700">
+            Cette page montre l'aperçu de la nouvelle barre de navigation avec les modifications demandées :
+        </p>
+        <ul class="mt-2 list-disc list-inside text-neutral-700">
+            <li>Ajout du bouton "EDLS" avec sous-menu horizontal</li>
+            <li>Ajout du bouton "REMONTÉES D'INFORMATIONS" après "Forces & Faiblesses"</li>
+            <li>Renommage de "Recherche" en "LANCER RECHERCHE" avec sous-menu vertical</li>
+            <li>Suppression du bouton "RHDPchat" de la liste principale et intégration dans le sous-menu de "LANCER RECHERCHE"</li>
+        </ul>
+    </main>
+    
+    <script>
+        // Initialiser les icônes Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>

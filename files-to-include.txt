@@ -1,0 +1,38 @@
+# Fichiers à inclure dans le dépôt Git pour déploiement sur Hostinger
+# https://github.com/JefterAdo/port.git
+
+# Fichiers racine
+package.json
+package-lock.json
+tsconfig.json
+tsconfig.app.json
+tsconfig.node.json
+vite.config.ts
+index.html
+.gitignore
+README.md
+requirements.txt
+deploy.sh
+nginx.conf.example
+rhdp-backend.service.example
+.env.production
+postcss.config.js
+tailwind.config.js
+eslint.config.js
+
+# Fichiers de base de données initiaux (vides)
+parties.json
+strengths_weaknesses.json
+
+# Dossiers
+/src
+/public
+/rag_backend
+/server
+
+# NE PAS inclure
+# /node_modules
+# /dist
+# /.env
+# /__pycache__
+# /.DS_Store

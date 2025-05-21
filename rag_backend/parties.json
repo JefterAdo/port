@@ -1,0 +1,20 @@
+{
+  "86421039-69ed-4ef6-aaaf-2f9115b32acf": {
+    "id": "86421039-69ed-4ef6-aaaf-2f9115b32acf",
+    "nom": "RHDP",
+    "description": "Rassemblement des Houphouetistes pour la D\u00e9mocratie et la Paix",
+    "logo_url": null
+  },
+  "34f10897-fd79-42fd-ad41-0fb40cfb4f69": {
+    "id": "34f10897-fd79-42fd-ad41-0fb40cfb4f69",
+    "nom": "PDCI",
+    "description": "Parti D\u00e9mocratique de C\u00f4te d'Ivoire",
+    "logo_url": null
+  },
+  "c81fd9e7-8587-48b0-8875-ce66e1b60884": {
+    "id": "c81fd9e7-8587-48b0-8875-ce66e1b60884",
+    "nom": "RHDP",
+    "description": "Rassemblement des Houphouetistes pour la D\u00e9mocratie et la Paix",
+    "logo_url": null
+  }
+}

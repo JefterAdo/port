@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Forces et Faiblesses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .section-title {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-top: -20px;
+            margin-left: -20px;
+            margin-right: -20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            border-radius: 5px 5px 0 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .media-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .importance-selector {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .importance-selector label {
+            display: inline-block;
+            width: auto;
+            margin-right: 5px;
+        }
+        .importance-selector input[type="radio"] {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>FORCES ET FAIBLESSES</h1>
+    
+    <div class="section">
+        <div class="section-title">CRÉER UNE ENTITÉ</div>
+        <form id="entity-form">
+            <div class="form-group">
+                <label for="party-select">Parti politique</label>
+                <select id="party-select" required>
+                    <option value="">Sélectionner un parti</option>
+                    <!-- Options seront chargées dynamiquement -->
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="section">
+        <div class="section-title">AJOUTER UNE FORCE OU UNE FAIBLESSE</div>
+        <div class="form-group">
+            <label for="element-type">Type d'élément</label>
+            <select id="element-type" required>
+                <option value="force">Force</option>
+                <option value="faiblesse">Faiblesse</option>
+                <option value="environnement">Environnement de la force ou de la faiblesse</option>
+                <option value="renforcement">Élément susceptible de renforcer la force ou la faiblesse</option>
+                <option value="deconstruction">Élément susceptible de déconstruire la force ou la faiblesse</option>
+                <option value="reponse">Réponse à la force ou à la faiblesse</option>
+                <option value="autre">Autre information utile</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="categorie">Catégorie</label>
+            <input type="text" id="categorie" placeholder="Ex: Économie, Social, etc.">
+        </div>
+        
+        <div class="form-group">
+            <label for="contenu">Contenu / Résumé</label>
+            <textarea id="contenu" rows="5" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="source">Source (optionnel)</label>
+            <input type="text" id="source">
+        </div>
+        
+        <div class="form-group">
+            <label for="auteur">Auteur (optionnel)</label>
+            <input type="text" id="auteur">
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">ENVIRONNEMENT DE LA FORCE OU DE LA FAIBLESSE</div>
+        <p>ÉLÉMENTS CONSTITUTIFS DE LA FORCE OU DE LA FAIBLESSE</p>
+        <p>Type de média (Texte - Image - Vidéo-Autres)</p>
+        
+        <div class="media-item">
+            <div class="form-group">
+                <label for="media-type-1">Type de média</label>
+                <select id="media-type-1">
+                    <option value="texte">Texte</option>
+                    <option value="image">Image</option>
+                    <option value="video">Vidéo</option>
+                    <option value="audio">Audio</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            
+            <div class="importance-selector">
+                <label>Importance:</label>
+                <input type="radio" name="importance-1" value="1" id="imp-1-1" checked>
+                <label for="imp-1-1">1</label>
+                <input type="radio" name="importance-1" value="2" id="imp-1-2">
+                <label for="imp-1-2">2</label>
+                <input type="radio" name="importance-1" value="3" id="imp-1-3">
+                <label for="imp-1-3">3</label>
+                <input type="radio" name="importance-1" value="4" id="imp-1-4">
+                <label for="imp-1-4">4</label>
+                <input type="radio" name="importance-1" value="5" id="imp-1-5">
+                <label for="imp-1-5">5</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="file-1">Fichier à télécharger</label>
+                <input type="file" id="file-1">
+            </div>
+            
+            <div class="form-group">
+                <label for="content-resume-1">Contenu / Résumé</label>
+                <textarea id="content-resume-1" rows="3"></textarea>
+            </div>
+        </div>
+        
+        <button type="button" id="add-media-btn">Ajouter un élément</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">ÉLÉMENTS SUSCEPTIBLES DE RENFORCER LA FORCE OU LA FAIBLESSE</div>
+        <p>Type de média (Texte - Image - Vidéo-Autres)</p>
+        
+        <div class="media-item">
+            <div class="form-group">
+                <label for="media-type-renforcement-1">Type de média</label>
+                <select id="media-type-renforcement-1">
+                    <option value="texte">Texte</option>
+                    <option value="image">Image</option>
+                    <option value="video">Vidéo</option>
+                    <option value="audio">Audio</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            
+            <div class="importance-selector">
+                <label>Importance:</label>
+                <input type="radio" name="importance-renforcement-1" value="1" id="imp-renf-1-1" checked>
+                <label for="imp-renf-1-1">1</label>
+                <input type="radio" name="importance-renforcement-1" value="2" id="imp-renf-1-2">
+                <label for="imp-renf-1-2">2</label>
+                <input type="radio" name="importance-renforcement-1" value="3" id="imp-renf-1-3">
+                <label for="imp-renf-1-3">3</label>
+                <input type="radio" name="importance-renforcement-1" value="4" id="imp-renf-1-4">
+                <label for="imp-renf-1-4">4</label>
+                <input type="radio" name="importance-renforcement-1" value="5" id="imp-renf-1-5">
+                <label for="imp-renf-1-5">5</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="file-renforcement-1">Fichier à télécharger</label>
+                <input type="file" id="file-renforcement-1">
+            </div>
+            
+            <div class="form-group">
+                <label for="content-resume-renforcement-1">Contenu / Résumé</label>
+                <textarea id="content-resume-renforcement-1" rows="3"></textarea>
+            </div>
+        </div>
+        
+        <button type="button" id="add-renforcement-btn">Ajouter l'élément</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">ÉLÉMENTS SUSCEPTIBLES DE DÉCONSTRUIRE LA FORCE OU LA FAIBLESSE</div>
+        <p>Type de média (Texte - Image - Vidéo-Autres)</p>
+        
+        <div class="media-item">
+            <div class="form-group">
+                <label for="media-type-deconstruction-1">Type de média</label>
+                <select id="media-type-deconstruction-1">
+                    <option value="texte">Texte</option>
+                    <option value="image">Image</option>
+                    <option value="video">Vidéo</option>
+                    <option value="audio">Audio</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            
+            <div class="importance-selector">
+                <label>Importance:</label>
+                <input type="radio" name="importance-deconstruction-1" value="1" id="imp-decon-1-1" checked>
+                <label for="imp-decon-1-1">1</label>
+                <input type="radio" name="importance-deconstruction-1" value="2" id="imp-decon-1-2">
+                <label for="imp-decon-1-2">2</label>
+                <input type="radio" name="importance-deconstruction-1" value="3" id="imp-decon-1-3">
+                <label for="imp-decon-1-3">3</label>
+                <input type="radio" name="importance-deconstruction-1" value="4" id="imp-decon-1-4">
+                <label for="imp-decon-1-4">4</label>
+                <input type="radio" name="importance-deconstruction-1" value="5" id="imp-decon-1-5">
+                <label for="imp-decon-1-5">5</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="file-deconstruction-1">Fichier à télécharger</label>
+                <input type="file" id="file-deconstruction-1">
+            </div>
+            
+            <div class="form-group">
+                <label for="content-resume-deconstruction-1">Contenu / Résumé</label>
+                <textarea id="content-resume-deconstruction-1" rows="3"></textarea>
+            </div>
+        </div>
+        
+        <button type="button" id="add-deconstruction-btn">Ajouter l'élément</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">RÉPONSE À LA FORCE OU À LA FAIBLESSE</div>
+        <p>Type de média (Texte - Image - Vidéo-Autres)</p>
+        
+        <div class="media-item">
+            <div class="form-group">
+                <label for="media-type-reponse-1">Type de média</label>
+                <select id="media-type-reponse-1">
+                    <option value="texte">Texte</option>
+                    <option value="image">Image</option>
+                    <option value="video">Vidéo</option>
+                    <option value="audio">Audio</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            
+            <div class="importance-selector">
+                <label>Importance:</label>
+                <input type="radio" name="importance-reponse-1" value="1" id="imp-rep-1-1" checked>
+                <label for="imp-rep-1-1">1</label>
+                <input type="radio" name="importance-reponse-1" value="2" id="imp-rep-1-2">
+                <label for="imp-rep-1-2">2</label>
+                <input type="radio" name="importance-reponse-1" value="3" id="imp-rep-1-3">
+                <label for="imp-rep-1-3">3</label>
+                <input type="radio" name="importance-reponse-1" value="4" id="imp-rep-1-4">
+                <label for="imp-rep-1-4">4</label>
+                <input type="radio" name="importance-reponse-1" value="5" id="imp-rep-1-5">
+                <label for="imp-rep-1-5">5</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="file-reponse-1">Fichier à télécharger</label>
+                <input type="file" id="file-reponse-1">
+            </div>
+            
+            <div class="form-group">
+                <label for="content-resume-reponse-1">Contenu / Résumé</label>
+                <textarea id="content-resume-reponse-1" rows="3"></textarea>
+            </div>
+        </div>
+        
+        <button type="button" id="add-reponse-btn">Ajouter l'élément</button>
+    </div>
+
+    <div class="section">
+        <div class="section-title">AUTRES INFORMATIONS UTILES</div>
+        <p>Type de média (Texte - Image - Vidéo-Autres)</p>
+        
+        <div class="media-item">
+            <div class="form-group">
+                <label for="media-type-autre-1">Type de média</label>
+                <select id="media-type-autre-1">
+                    <option value="texte">Texte</option>
+                    <option value="image">Image</option>
+                    <option value="video">Vidéo</option>
+                    <option value="audio">Audio</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>
+            
+            <div class="importance-selector">
+                <label>Importance:</label>
+                <input type="radio" name="importance-autre-1" value="1" id="imp-autre-1-1" checked>
+                <label for="imp-autre-1-1">1</label>
+                <input type="radio" name="importance-autre-1" value="2" id="imp-autre-1-2">
+                <label for="imp-autre-1-2">2</label>
+                <input type="radio" name="importance-autre-1" value="3" id="imp-autre-1-3">
+                <label for="imp-autre-1-3">3</label>
+                <input type="radio" name="importance-autre-1" value="4" id="imp-autre-1-4">
+                <label for="imp-autre-1-4">4</label>
+                <input type="radio" name="importance-autre-1" value="5" id="imp-autre-1-5">
+                <label for="imp-autre-1-5">5</label>
+            </div>
+            
+            <div class="form-group">
+                <label for="file-autre-1">Fichier à télécharger</label>
+                <input type="file" id="file-autre-1">
+            </div>
+            
+            <div class="form-group">
+                <label for="content-resume-autre-1">Contenu / Résumé</label>
+                <textarea id="content-resume-autre-1" rows="3"></textarea>
+            </div>
+        </div>
+        
+        <button type="button" id="add-autre-btn">Ajouter l'élément</button>
+    </div>
+
+    <button type="button" id="submit-all-btn" style="margin-top: 20px; font-size: 16px;">Enregistrer toutes les données</button>
+
+    <script>
+        // Code JavaScript pour la gestion du formulaire serait ajouté ici
+        // Ce code gérerait les appels API vers les endpoints que nous avons créés
+    </script>
+</body>
+</html>
